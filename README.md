@@ -42,11 +42,11 @@ Annual flashiness index values at the Aberfoyle (left) and Side Road 10 (right) 
 Daily average water temperature (C) at the Side Road 10 gauge station as a function of daily average air temperature (C) at the Cambridge Shade’s Mills Climate Station.
 
 ## Team
-[Koya Basso](https://github.com/KoBaa333)
-[Braden Fallon](https://github.com/BradenFallon44)
-[Morgan Humphrey](https://github.com/humphrem)
-[Hanna Novaes](https://github.com/hannajn)
-[Emma Tamburro](https://github.com/etamburr)
-[Sveta Uzhova](https://github.com/suzhova)
-[Janna Wardell](https://github.com/jwardell02)
-Robert Hanner 
+- [Koya Basso](https://github.com/KoBaa333)
+- [Braden Fallon](https://github.com/BradenFallon44)
+- [Morgan Humphrey](https://github.com/humphrem)
+- [Hanna Novaes](https://github.com/hannajn)
+- [Emma Tamburro](https://github.com/etamburr)
+- [Sveta Uzhova](https://github.com/suzhova)
+- [Janna Wardell](https://github.com/jwardell02)
+- Robert Hanner 
