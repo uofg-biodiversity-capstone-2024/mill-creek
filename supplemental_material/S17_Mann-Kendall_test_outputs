@@ -1,0 +1,480 @@
+Annual Mean Air Temperature:
+
+  	Mann-Kendall trend test
+  
+  data:  annual_mean_air_temp$Mean
+  z = 0.87571, n = 21, p-value = 0.3812
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+    30.0000000 1096.6666667    0.1428571
+    
+  	Sen's slope
+  
+  data:  annual_mean_air_temp$Mean
+  z = 0.87571, n = 21, p-value = 0.3812
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.06207747  0.12931073
+  sample estimates:
+  Sen's slope 
+   0.03670115 
+
+July Mean Air Temperature:
+
+  	Mann-Kendall trend test
+
+  data:  mk_monthly_mean_data_july$Average
+  z = -0.51335, n = 21, p-value = 0.6077
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+              S          varS           tau 
+   -18.00000000 1096.66666667   -0.08571429 
+  
+  	Sen's slope
+
+  data:  mk_monthly_mean_data_july$Average
+  z = -0.51335, n = 21, p-value = 0.6077
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.1363710  0.1229474
+  sample estimates:
+  Sen's slope 
+   -0.0231742 
+
+January Mean Air Temperature:
+
+  	Mann-Kendall trend test
+  
+  data:  mk_monthly_mean_data_jan$Average
+  z = 1.3951, n = 20, p-value = 0.163
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   44.0000000 950.0000000   0.2315789 
+   
+  	Sen's slope
+  
+  data:  mk_monthly_mean_data_jan$Average
+  z = 1.3951, n = 20, p-value = 0.163
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.06837231  0.37061156
+  sample estimates:
+  Sen's slope 
+    0.1396023 
+
+Total Annual Precipitation:
+
+  	Mann-Kendall trend test
+  
+  data:  mk_summarized_annual_total_precip$Total
+  z = 0.71933, n = 24, p-value = 0.4719
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+    30.0000000 1625.3333333    0.1086957 
+  
+  	Sen's slope
+  
+  data:  mk_summarized_annual_total_precip$Total
+  z = 0.71933, n = 24, p-value = 0.4719
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -6.763636 14.173333
+  sample estimates:
+  Sen's slope 
+     5.611111 
+     
+Aberfoyle Mean Annual Water Temperature:
+
+  	Mann-Kendall trend test
+  
+  data:  ABF_annual_mean_water_temp$Mean
+  z = -0.94547, n = 16, p-value = 0.3444
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+  -22.0000000 493.3333333  -0.1833333 
+  
+  	Sen's slope
+  
+  data:  ABF_annual_mean_water_temp$Mean
+  z = -0.94547, n = 16, p-value = 0.3444
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.14890026  0.04959022
+  sample estimates:
+  Sen's slope 
+  -0.03157026 
+
+Side Road 10 Annual Water Temperature:
+
+  	Mann-Kendall trend test
+  
+  data:  SR10_annual_mean_water_temp$Mean
+  z = 0.45312, n = 17, p-value = 0.6505
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+   12.00000000 589.33333333   0.08823529 
+
+  	Sen's slope
+  
+  data:  SR10_annual_mean_water_temp$Mean
+  z = 0.45312, n = 17, p-value = 0.6505
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.07422724  0.11171539
+  sample estimates:
+  Sen's slope 
+    0.0265682 
+
+Aberfoyle Historical July-August Minimum Water Temperature:
+  	Mann-Kendall trend test
+  
+  data:  ABF_jul_aug$min
+  z = -1.7211, n = 28, p-value = 0.08524
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+   -88.0000000 2555.3333333   -0.2346742 
+  
+  	Sen's slope
+  
+  data:  ABF_jul_aug$min
+  z = -1.7211, n = 28, p-value = 0.08524
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.126666667  0.009027778
+  sample estimates:
+  Sen's slope 
+  -0.06398778 
+
+Aberfoyle Historical July-August Maximum Water Temperature:
+  	Mann-Kendall trend test
+  
+  data:  ABF_jul_aug$max
+  z = -0.23731, n = 28, p-value = 0.8124
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+              S          varS           tau 
+   -13.00000000 2557.00000000   -0.03462127 
+  
+  	Sen's slope
+  
+  data:  ABF_jul_aug$max
+  z = -0.23731, n = 28, p-value = 0.8124
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.06937495  0.06394738
+  sample estimates:
+   Sen's slope 
+  -0.008191975 
+
+Side Road 10 Historical July-August Minimum Water Temperature:
+  	Mann-Kendall trend test
+  
+  data:  SR10_jul_aug$min
+  z = 0.2817, n = 29, p-value = 0.7782
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+  1.600000e+01 2.835333e+03 3.970333e-02 
+  
+  	Sen's slope
+  
+  data:  SR10_jul_aug$min
+  z = 0.2817, n = 29, p-value = 0.7782
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.05294118  0.06000000
+  sample estimates:
+  Sen's slope 
+   0.01010101 
+
+Side Road 10 Historical July-August Maximum Water Temperature:
+  	Mann-Kendall trend test
+  
+  data:  SR10_jul_aug$max
+  z = -1.841, n = 29, p-value = 0.06562
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   -99.000000 2833.666667   -0.245972 
+  
+  	Sen's slope
+  
+  data:  SR10_jul_aug$max
+  z = -1.841, n = 29, p-value = 0.06562
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.1666667  0.0000000
+  sample estimates:
+  Sen's slope 
+  -0.08153409
+
+Aberfoyle Annual Water Flow:
+
+  	Mann-Kendall trend test
+  
+  data:  ABF_annual_mean_water_flow$Mean
+  z = -0.16222, n = 20, p-value = 0.8711
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+   -6.00000000 950.00000000  -0.03157895 
+  
+  	Sen's slope
+  
+  data:  ABF_annual_mean_water_flow$Mean
+  z = -0.16222, n = 20, p-value = 0.8711
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.008813635  0.007787079
+  sample estimates:
+    Sen's slope 
+  -0.0006579308 
+
+Side Road 10 Annual Water Flow:
+
+  	Mann-Kendall trend test
+  
+  data:  SR10_annual_mean_water_flow$Mean
+  z = 1.6123, n = 24, p-value = 0.1069
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+    66.0000000 1625.3333333    0.2391304 
+  
+  	Sen's slope
+  
+  data:  SR10_annual_mean_water_flow$Mean
+  z = 1.6123, n = 24, p-value = 0.1069
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.002421657  0.029819767
+  sample estimates:
+  Sen's slope 
+   0.01451455 
+
+Aberfoyle Annual Flashiness:
+
+  	Mann-Kendall trend test
+  
+  data:  clean_ABF_flashiness$FlashinessIndex
+  z = 2.6929, n = 20, p-value = 0.007084
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   84.0000000 950.0000000   0.4421053 
+  
+  	Sen's slope
+  
+  data:  clean_ABF_flashiness$FlashinessIndex
+  z = 2.6929, n = 20, p-value = 0.007084
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   0.001625105 0.006313994
+  sample estimates:
+  Sen's slope 
+    0.0039017 
+    
+Side Road 10 Annual Flashiness:
+
+  	Mann-Kendall trend test
+  
+  data:  clean_SR10_flashiness$FlashinessIndex
+  z = 0.52089, n = 24, p-value = 0.6024
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+  2.200000e+01 1.625333e+03 7.971014e-02 
+  
+  	Sen's slope
+  
+  data:  clean_SR10_flashiness$FlashinessIndex
+  z = 0.52089, n = 24, p-value = 0.6024
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.001138318  0.002162272
+  sample estimates:
+   Sen's slope 
+  0.0005077539 
+
+Annual Mean Chloride Concentration:
+
+  	Mann-Kendall trend test
+  
+  data:  chloride$Mean
+  z = 4.007, n = 16, p-value = 6.149e-05
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+         S     varS      tau 
+   90.0000 493.3333   0.7500 
+  
+  	Sen's slope
+  
+  data:  chloride$Mean
+  z = 4.007, n = 16, p-value = 6.149e-05
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   1.341667 2.052361
+  sample estimates:
+  Sen's slope 
+     1.682402 
+
+Annual Mean Nitrite Concentration:
+
+  	Mann-Kendall trend test
+  
+  data:  nitrite$Mean
+  z = -1.3707, n = 14, p-value = 0.1705
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+  -26.0000000 332.6666667  -0.2872972 
+  
+  	Sen's slope
+  
+  data:  nitrite$Mean
+  z = -1.3707, n = 14, p-value = 0.1705
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -3.526786e-04  9.027778e-05
+  sample estimates:
+    Sen's slope 
+  -0.0001339286 
+
+Annual Mean Nitrate Concentration:
+  
+  	Mann-Kendall trend test
+  
+  data:  nitrate$Mean
+  z = 1.3057, n = 16, p-value = 0.1917
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+         S     varS      tau 
+   30.0000 493.3333   0.2500 
+  
+  	Sen's slope
+  
+  data:  nitrate$Mean
+  z = 1.3057, n = 16, p-value = 0.1917
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.00597500  0.03277083
+  sample estimates:
+  Sen's slope 
+   0.01116342 
+
+Annual Mean Ammonium Concentration:
+
+  	Mann-Kendall trend test
+  
+  data:  ammonium$Mean
+  z = 1.2044, n = 14, p-value = 0.2284
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   23.0000000 333.6666667   0.2527473 
+  
+  	Sen's slope
+  
+  data:  ammonium$Mean
+  z = 1.2044, n = 14, p-value = 0.2284
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.001214286  0.003444444
+  sample estimates:
+  Sen's slope 
+  0.001008333 
+
+  
+Annual Mean Phosphate Concentration:
+
+  	Mann-Kendall trend test
+  
+  data:  phosphate$Mean
+  z = 2.0286, n = 14, p-value = 0.0425
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   38.0000000 332.6666667   0.4198959 
+  
+  	Sen's slope
+  
+  data:  phosphate$Mean
+  z = 2.0286, n = 14, p-value = 0.0425
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   0.0000235119 0.0004071429
+  sample estimates:
+  Sen's slope 
+  0.000221875 
+  
+Annual Mean Dissolved Oxygen Concentration:
+
+  	Mann-Kendall trend test
+  
+  data:  do$Mean
+  z = 0, n = 14, p-value = 1
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+             S         varS          tau 
+   -1.00000000 333.66666667  -0.01098901 
+  
+  	Sen's slope
+  
+  data:  do$Mean
+  z = 0, n = 14, p-value = 1
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.1179545  0.1133333
+  sample estimates:
+   Sen's slope 
+  -0.003333333
+   
+Annual Mean Conductivity:
+
+  	Mann-Kendall trend test
+  
+  data:  conductivity$Mean
+  z = 3.1066, n = 16, p-value = 0.001893
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   70.0000000 493.3333333   0.5833333 
+  
+  	Sen's slope
+  
+  data:  conductivity$Mean
+  z = 3.1066, n = 16, p-value = 0.001893
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+    2.925 11.000
+  sample estimates:
+  Sen's slope 
+     6.551389
+     
+Annual Mean pH:
+
+  	Mann-Kendall trend test
+  
+  data:  ph$Mean
+  z = 1.1256, n = 16, p-value = 0.2604
+  alternative hypothesis: true S is not equal to 0
+  sample estimates:
+            S        varS         tau 
+   26.0000000 493.3333333   0.2166667 
+  
+  	Sen's slope
+  
+  data:  ph$Mean
+  z = 1.1256, n = 16, p-value = 0.2604
+  alternative hypothesis: true z is not equal to 0
+  95 percent confidence interval:
+   -0.008839286  0.032222222
+  sample estimates:
+  Sen's slope 
+     0.012973 

@@ -1,0 +1,53 @@
+water_temp.R------------------------------------------------------------------------------
+Shapiro-Wilk normality tests-----------------------------------
+
+data:  SR10_results$Average
+W = 0.89894, p-value = 4.107e-11
+
+data:  SR10_results$Maximum
+W = 0.93256, p-value = 1.343e-08
+
+data:  ABF_results$Average
+W = 0.88263, p-value = 1.92e-11
+
+data:  ABF_results$Maximum
+W = 0.90567, p-value = 5.076e-10
+
+Wilcoxon rank sum tests with continuity correction-----------------------------------
+
+average monthly temp:
+data:  SR10_results$Average and ABF_results$Average
+W = 20305, p-value = 0.07951
+alternative hypothesis: true location shift is not equal to 0
+
+maximum monthly temp
+data:  SR10_results$Maximum and ABF_results$Maximum
+W = 16528, p-value = 2.132e-06
+alternative hypothesis: true location shift is not equal to 0
+
+water_flow.R------------------------------------------------------------------------------
+Shapiro-Wilk normality tests-----------------------------------
+
+data:  SR10_results$Average
+W = 0.93349, p-value = 3.484e-10
+
+data:  ABF_results$Average
+W = 0.90271, p-value = 2.484e-11
+
+data:  SR10_annual_flashiness$FlashinessIndex
+W = 0.85258, p-value = 0.002441
+
+data:  ABF_annual_flashiness$FlashinessIndex
+W = 0.93385, p-value = 0.1831
+
+Wilcoxon rank sum exact tests-----------------------------------
+
+gauge flow
+data:  SR10_annual_flow$Mean and ABF_annual_flow$Mean
+W = 480, p-value = 1.136e-12
+alternative hypothesis: true location shift is not equal to 0
+
+gauge flashiness
+data:  SR10_annual_flashiness$FlashinessIndex and ABF_annual_flashiness$FlashinessIndex
+W = 108, p-value = 0.001465
+alternative hypothesis: true location shift is not equal to 0

@@ -49,4 +49,4 @@ Daily average water temperature (C) at the Side Road 10 gauge station as a funct
 - [Emma Tamburro](https://github.com/etamburr)
 - [Sveta Uzhova](https://github.com/suzhova)
 - [Janna Wardell](https://github.com/jwardell02)
-- Robert Hanner 
+- Dr. Robert Hanner 
