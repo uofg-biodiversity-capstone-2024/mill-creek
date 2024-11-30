@@ -848,7 +848,7 @@ compare_performance(sqrt_nitrate_model_synergy, sqrt_nitrate_model_additive, sqr
 
 # Box cox transformation
 lambda_nitrate <- BoxCox.lambda(nitrate$Result) # find the optimal lambda
-transformed_conductivity <- BoxCox(nitrate$Result, lambda_nitrate) # transform raw values using lambda
+transformed_nitrate <- BoxCox(nitrate$Result, lambda_nitrate) # transform raw values using lambda
 nitrate$box_cox_transformed = transformed_nitrate # make new column in dataset
 View(nitrate)
 
