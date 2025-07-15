@@ -163,8 +163,7 @@ years_reported_sites$Location <- factor(years_reported_sites$Location, levels = 
 
 # PWQMN graphs -----------------------------------------------------------------
 ammonium %>% 
-  mutate(`Collection Date` = as.Date(`Collection Date`)) %>% 
-  ggplot(aes(`Collection Date`, Result)) + 
+  ggplot(aes(Collection_Date, Result)) + 
   geom_point(aes(colour = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
