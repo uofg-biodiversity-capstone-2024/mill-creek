@@ -9,87 +9,70 @@ if (!require(readxl, quietly = TRUE)) {
   install.packages("readxl")
   library(readxl)}
 
+if (!require(janitor, quietly = TRUE)) {
+  install.packages("janitor")
+  library(janitor)}
+
 if (!require(lubridate, quietly = TRUE)) {
   install.packages("lubridate")
   library(lubridate)}
 
 ## Import data -----------------------------------------------------------------
 # PWQMN data 
-ammonium <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Ammonium") # ammonium
-View(ammonium)
+ammonium <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Ammonium")  # ammonium
 
 chloride <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Chloride") # chloride
-View(chloride)
 
 conductivity <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Conductivity") # conductivity
-View(conductivity)
 
 dissolved_oxygen <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Dissolved Oxygen") # dissolved oxygen
-View(dissolved_oxygen)
 
 nitrate <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Nitrate") # nitrate
-View(nitrate)
 
 nitrite <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Nitrite") # nitrite
-View(nitrite)
 
 ph <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "pH") # pH
-View(ph)
 
 phosphate <- read_excel("./data/water_quality/PWQMN_Mill_Creek_Data.xlsx", sheet = "Phosphate") # phosphate
-View(phosphate)
 
 # Most extreme years 
 air_temp_summarized <- read.csv("data/air_temp/CSM_summarized_air_temp.csv") # air temperature - all years summarized
-View(air_temp_summarized)
 
 ABF_water_temp_summarized <- read.csv("data/water_temp/ABF_summarized_water_temp.csv") # Aberfoyle water temperature - all years summarized
-View(ABF_water_temp_summarized)
 
 SR10_water_temp_summarized <- read.csv("data/water_temp/SR10_summarized_water_temp.csv") # Side Road 10 water temperature - all years summarized
-View(SR10_water_temp_summarized)
 
 precip_summarized <- read.csv("data/precipitation/CSM_summarized_precip.csv") # precipitation - all years summarized
-View(precip_summarized)
 
 # Rangers Restoration data
 ranger_activities <- read.csv("data/Ranger_restoration_activities.csv", header=TRUE) # restoration activities by type
-View(ranger_activities)
 
 ranger_sites <- read.csv("data/Ranger_work_sites.csv", header=TRUE) # restoration work sites
-View(ranger_sites)
 
-## Data prep -------------------------------------------------------------------
-# PWQMN data
+
+# Data prep ---------------------------------------------------------------
+### PWQMN data
 ammonium$Collection_Date <- as.Date(ammonium$`Collection Timestamp`)
-View(ammonium)
 
 chloride$Collection_Date <- as.Date(chloride$`Collection Timestamp`)
-View(chloride)
 
 conductivity$Collection_Date <- as.Date(conductivity$`Collection Timestamp`)
-View(conductivity)
 
 dissolved_oxygen$Collection_Date <- as.Date(dissolved_oxygen$`Collection Timestamp`)
-View(dissolved_oxygen)
 
 nitrate$Collection_Date <- as.Date(nitrate$`Collection Timestamp`)
-View(nitrate)
 
 nitrite$Collection_Date <- as.Date(nitrite$`Collection Timestamp`)
-View(nitrite)
 
 phosphate$Collection_Date <- as.Date(phosphate$`Collection Timestamp`)
-View(phosphate)
 
 ph$Collection_Date <- as.Date(ph$`Collection Timestamp`)
-View(ph)
 
-# Most extreme years 
-# Air temperature
+
+# Most extreme years ------------------------------------------------------
+### Air temperature
 air_temp_summarized$Month <- month.abb[air_temp_summarized$Month] # give months abbreviated names
 air_temp_summarized$Month <- factor(air_temp_summarized$Month, levels = month.abb) # convert month to a factor
-View(air_temp_summarized)
 
 air_temp_2002 <- subset(air_temp_summarized, Year == 2002) # select 2002 data
 air_temp_2005 <- subset(air_temp_summarized, Year == 2005) # select 2005 data
@@ -101,12 +84,10 @@ air_temp_2015 <- subset(air_temp_summarized, Year == 2015) # select 2015 data
 air_temp_2020 <- subset(air_temp_summarized, Year == 2020) # select 2020 data
 
 air_temp_all_years <- bind_rows(air_temp_2002, air_temp_2005, air_temp_2009, air_temp_2011, air_temp_2012, air_temp_2014, air_temp_2015, air_temp_2020)
-View(air_temp_all_years)
 
-# Water temperature - Aberfoyle station
+### Water temperature - Aberfoyle station
 ABF_water_temp_summarized$Month <- month.abb[ABF_water_temp_summarized$Month] # give months abbreviated names
 ABF_water_temp_summarized$Month <- factor(ABF_water_temp_summarized$Month, levels = month.abb) # convert month to a factor
-View(ABF_water_temp_summarized)
 
 ABF_high_water_temp_2005 <- subset(ABF_water_temp_summarized, Year == 2005) # select 2005 data - high temp
 ABF_high_water_temp_2006 <- subset(ABF_water_temp_summarized, Year == 2006) # select 2006 data - high temp
@@ -115,7 +96,6 @@ ABF_high_water_temp_2016 <- subset(ABF_water_temp_summarized, Year == 2016) # se
 ABF_high_water_temp_2019 <- subset(ABF_water_temp_summarized, Year == 2019) # select 2019 data - high temp
 
 ABF_high_water_temp_all_years <- bind_rows(ABF_high_water_temp_2005, ABF_high_water_temp_2006, ABF_high_water_temp_2011, ABF_high_water_temp_2016, ABF_high_water_temp_2019)
-View(ABF_high_water_temp_all_years)
 
 ABF_low_water_temp_2005 <- subset(ABF_water_temp_summarized, Year == 2005) # select 2005 data - low temp
 ABF_low_water_temp_2008 <- subset(ABF_water_temp_summarized, Year == 2008) # select 2008 data - low temp
@@ -124,12 +104,10 @@ ABF_low_water_temp_2014 <- subset(ABF_water_temp_summarized, Year == 2014) # sel
 ABF_low_water_temp_2019 <- subset(ABF_water_temp_summarized, Year == 2019) # select 2019 data - low temp
 
 ABF_low_water_temp_all_years <- bind_rows(ABF_low_water_temp_2005, ABF_low_water_temp_2008, ABF_low_water_temp_2009, ABF_low_water_temp_2014, ABF_low_water_temp_2019)
-View(ABF_low_water_temp_all_years)
 
-# Water temperature - Side Road 10 station
+### Water temperature - Side Road 10 station
 SR10_water_temp_summarized$Month <- month.abb[SR10_water_temp_summarized$Month] # give months abbreviated names
 SR10_water_temp_summarized$Month <- factor(SR10_water_temp_summarized$Month, levels = month.abb) # convert month to a factor
-View(SR10_water_temp_summarized)
 
 SR10_high_water_temp_2001 <- subset(SR10_water_temp_summarized, Year == 2001) # select 2001 data - high temp
 SR10_high_water_temp_2002 <- subset(SR10_water_temp_summarized, Year == 2002) # select 2002 data - high temp
@@ -137,19 +115,16 @@ SR10_high_water_temp_2012 <- subset(SR10_water_temp_summarized, Year == 2012) # 
 SR10_high_water_temp_2023 <- subset(SR10_water_temp_summarized, Year == 2023) # select 2023 data - high temp
 
 SR10_high_water_temp_all_years <- bind_rows(SR10_high_water_temp_2001, SR10_high_water_temp_2002, SR10_high_water_temp_2012, SR10_high_water_temp_2023)
-View(SR10_high_water_temp_all_years)
 
 SR10_low_water_temp_2003 <- subset(SR10_water_temp_summarized, Year == 2003) # select 2003 data - low temp
 SR10_low_water_temp_2018 <- subset(SR10_water_temp_summarized, Year == 2018) # select 2018 data - low temp
 SR10_low_water_temp_2019 <- subset(SR10_water_temp_summarized, Year == 2019) # select 2019 data - low temp
 
 SR10_low_water_temp_all_years <- bind_rows(SR10_low_water_temp_2003, SR10_low_water_temp_2018, SR10_low_water_temp_2019)
-View(SR10_low_water_temp_all_years)
 
-# Precipitation
+### Precipitation
 precip_summarized$Month <- month.abb[precip_summarized$Month] # give months abbreviated names
 precip_summarized$Month <- factor(precip_summarized$Month, levels = month.abb) # convert month to a factor
-View(precip_summarized)
 
 high_precip_2006 <- subset(precip_summarized, Year == 2006) # select 2006 data - high precip year
 high_precip_2008 <- subset(precip_summarized, Year == 2008) # select 2008 data - high precip year
@@ -158,7 +133,6 @@ high_precip_2019 <- subset(precip_summarized, Year == 2019) # select 2019 data -
 high_precip_2023 <- subset(precip_summarized, Year == 2023) # select 2023 data - high precip year
 
 high_precip_years <- bind_rows(high_precip_2006, high_precip_2008, high_precip_2016, high_precip_2019, high_precip_2023)
-View(high_precip_years)
 
 low_precip_2007 <- subset(precip_summarized, Year == 2007) # select 2007 data - low precip year
 low_precip_2011 <- subset(precip_summarized, Year == 2011) # select 2011 data - low precip year
@@ -167,10 +141,9 @@ low_precip_2017 <- subset(precip_summarized, Year == 2017) # select 2017 data - 
 low_precip_2022 <- subset(precip_summarized, Year == 2022) # select 2022 data - low precip year
 
 low_precip_years <- bind_rows(low_precip_2007, low_precip_2011, low_precip_2015, low_precip_2017, low_precip_2022)
-View(low_precip_years)
 
-# Rangers Restoration data  
-# Restoration methods
+# Rangers Restoration data ------------------------------------------------
+#Restoration methods
 years_reported_activities <- ranger_activities %>%
   distinct(Year,Restoration.Work.Performed) %>%
   group_by(Restoration.Work.Performed)%>%
@@ -190,7 +163,8 @@ years_reported_sites$Location <- factor(years_reported_sites$Location, levels = 
 
 # PWQMN graphs -----------------------------------------------------------------
 ammonium %>% 
-  ggplot(aes(Collection_Date, Result)) + 
+  mutate(`Collection Date` = as.Date(`Collection Date`)) %>% 
+  ggplot(aes(`Collection Date`, Result)) + 
   geom_point(aes(colour = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 

@@ -17,7 +17,7 @@ if (!require(gridExtra, quietly = TRUE)) {
   install.packages("gridExtra")
   library(gridExtra)}
 
-## Import data -----------------------------------------------------------------
+# Import data -----------------------------------------------------------------
 # Biotic inventory description data
 inventory <- read_excel("./data/biotic_inventory_description.xlsx")
 fish <- read_excel("./data/fish_order_family.xlsx")
@@ -241,5 +241,3 @@ ggplot(census, aes(x = Year)) +
   scale_y_continuous(name = "Population",
                      sec.axis = sec_axis(~ ., name = "Dwellings")) +  #direct mapping for the second y-axis
   theme_minimal()
-
-    

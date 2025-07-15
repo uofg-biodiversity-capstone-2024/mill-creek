@@ -9,7 +9,7 @@ if (!require(tidyverse, quietly = TRUE)) {
   install.packages("tidyverse")
   library(tidyverse)}
 
-## Import data -----------------------------------------------------------------
+# Import data -----------------------------------------------------------------
 # Read Excel file and combine data sheets
 CSM_file_path <- "./data/air_temp/CSM_raw_air_temp.xlsx" # define file path
 CSM_sheet_names <- excel_sheets(CSM_file_path) # define sheet names
@@ -22,7 +22,7 @@ CSM_combined_data <- bind_rows(CSM_list) # combine all data frames
 
 View(CSM_combined_data)
 
-## Data prep -------------------------------------------------------------------
+# Data prep -------------------------------------------------------------------
 # Adjust precision so all values have 2 decimal places
 CSM_combined_data <- CSM_combined_data %>%
   mutate(Value = round(Value, 2))
@@ -64,14 +64,8 @@ hot5_CSM <- CSM_results %>%
   slice_head(n = 5) %>%
   select(Year, Month, Average)
 
-print(hot5_CSM)
-
 # Identify 5 lowest average temp months
 cold5_CSM <- CSM_results %>%
   arrange(Average) %>%
   slice_head(n = 5) %>%
   select(Year, Month, Average)
-
-print(cold5_CSM)
-
-
