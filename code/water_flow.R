@@ -17,7 +17,10 @@ if (!require(remotes, quietly = TRUE)){
 if (!require(ContDataQC, quietly = TRUE)){
   install.packages("ContDataQC")
   library(ContDataQC)
-}
+} #one way
+
+remotes::install_github("leppott/ContDataQC", build_vignettes = FALSE) #another way if issues with R version
+library(ContDataQC)
 
 ## Import data -----------------------------------------------------------------
 # Read Excel files and combine sheets 
@@ -238,5 +241,3 @@ print(gauge_flashiness)
 
 # Effect size
 mean(ABF_annual_flashiness$FlashinessIndex) - mean(SR10_annual_flashiness$FlashinessIndex)
-
-
