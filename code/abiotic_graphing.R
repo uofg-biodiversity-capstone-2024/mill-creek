@@ -164,7 +164,7 @@ years_reported_sites$Location <- factor(years_reported_sites$Location, levels = 
 # PWQMN graphs -----------------------------------------------------------------
 ammonium %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -175,7 +175,7 @@ ammonium %>%
 
 chloride %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -186,7 +186,7 @@ chloride %>%
 
 conductivity %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -197,7 +197,7 @@ conductivity %>%
 
 dissolved_oxygen %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -208,7 +208,7 @@ dissolved_oxygen %>%
 
 nitrate %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -219,7 +219,7 @@ nitrate %>%
 
 nitrite %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -230,7 +230,7 @@ nitrite %>%
 
 phosphate %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -241,7 +241,7 @@ phosphate %>%
 
 ph %>% 
   ggplot(aes(Collection_Date, Result)) + 
-  geom_point(aes(colour = Units, shape = Method)) + 
+  geom_point(aes(color = Units, shape = Method)) + 
   geom_line() + 
   theme_minimal() + 
   xlab("Date") + 
@@ -251,6 +251,9 @@ ph %>%
   theme(plot.title = element_text(hjust = 0.5))
 
 # Most extreme years graphs ----------------------------------------------------
+# Define color palette
+colors <- hcl.colors(3, palette = "Set2")
+
 # Air temperature
 ggplot(air_temp_all_years, aes(x = Month)) +
   facet_wrap(~Year, scales = "free", nrow=4, ncol=2) +
@@ -335,8 +338,8 @@ ggplot(high_precip_years, aes(x = Month)) +
   geom_point(aes(y = Total, color = "Total"), size = 3, shape = 18) +
   labs(x = "Month",
        y = "Total precipitation (mm)",
-       colour = "Legend") +
-  scale_color_manual(values = colours) + 
+       color = "Legend") +
+  scale_color_manual(values = colors) + 
   ylim(0,250) +
   ggtitle("High precipitation years") +
   theme_minimal() + 
@@ -350,8 +353,8 @@ ggplot(low_precip_years, aes(x = Month)) +
   geom_point(aes(y = Total, color = "Total"), size = 3, shape = 18) +
   labs(x = "Month",
        y = "Total precipitation (mm)",
-       colour = "Legend") +
-  scale_color_manual(values = colours) + 
+       color = "Legend") +
+  scale_color_manual(values = colors) + 
   ylim(0,250) +
   ggtitle("Low precipitation years") +
   theme_minimal() + 
@@ -360,7 +363,7 @@ ggplot(low_precip_years, aes(x = Month)) +
                                         linetype = 2))
 
 # Rangers restoration graphs ---------------------------------------------------
-palette <- hcl.colors(18, palette = "Set2") # define colour palette
+palette <- hcl.colors(18, palette = "Set2") # define color palette
 
 # Restoration methods
 ggplot(years_reported_activities, aes(x = Restoration.Work.Performed, y = count, fill = Restoration.Work.Performed)) +
@@ -383,3 +386,4 @@ ggplot(years_reported_sites, aes(x = Location, y = count, fill = Location)) +
   theme_minimal() +
   scale_y_continuous(breaks = c(0,2,4,6,8,10,12,14)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
+
