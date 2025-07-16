@@ -76,7 +76,7 @@ at_combined_data <- bind_rows(at_list) # combine data
 wq_precip_data_prep <- function(wq_file_path, sheet_name, precip_combined_data) {
   # load the water quality data
   parameter_data <- read_excel(wq_file_path, sheet = sheet_name) %>%
-    select(`Collection Timestamp`, Result, Units) %>%
+    dplyr::select(`Collection Timestamp`, Result, Units) %>%
     rename(Collection_Timestamp = `Collection Timestamp`)
   
   # Define 36 hr period before sample was taken
@@ -110,7 +110,7 @@ wq_precip_data_prep <- function(wq_file_path, sheet_name, precip_combined_data) 
 wq_temp_data_prep <- function(wt_file_path, sheet_name, wt_combined_data) {
   # load the water quality data
   parameter_data <- read_excel(wq_file_path, sheet = sheet_name) %>%
-    select(`Collection Timestamp`, Result, Units) %>%
+    dplyr::select(`Collection Timestamp`, Result, Units) %>%
     rename(Collection_Timestamp = `Collection Timestamp`)
   
   # Define 36 hr period before sample was taken
@@ -1862,14 +1862,22 @@ check_normality(box_cox_model) # non-normality of residuals detected (p < .001)
 temp_rlm_model <- rlm(daily_avg_water_temp ~ daily_avg_air_temp, data = combined_daily_avg)
 summary(temp_rlm_model)
 
+# Set the significance level
+alpha <- 0.05
+
+# Calculate the critical t-value for a two-tailed test
+critical_t_value <- qt(1 - alpha/2, df = 4441)
+
+critical_t_value
+
 # Plot temperature relationship
 combined_daily_avg %>%
   ggplot(aes(x = daily_avg_air_temp, y = daily_avg_water_temp)) +
-  geom_point(shape = 16) +
-  labs(x = "Daily Average Air Temperature (C)",
-       y = "Daily Average Water Temperature (C)") +
-  theme_minimal()+
-  geom_smooth(method="lm", colour = "royalblue")
+  geom_point(shape = 16, size = 3) +
+  labs(x = expression("Daily average air temperature (" * degree * "C)"),
+       y = expression("Daily average water temperature (" * degree * "C)")) +
+  theme_bw(base_size = 24) +
+  geom_smooth(method = "lm", colour = "royalblue", se = FALSE, linewidth = 2)
 
 par(mfrow = c(2, 2))
 plot(temp_rlm_model)
