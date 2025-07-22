@@ -387,3 +387,13 @@ ggplot(years_reported_sites, aes(x = Location, y = count, fill = Location)) +
   scale_y_continuous(breaks = c(0,2,4,6,8,10,12,14)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
 
+#Restoration timeline
+ranger_activities_summary <- ranger_activities %>%
+  count(Year)
+
+ggplot(ranger_activities_summary, aes(x = Year, y = n)) +
+  geom_col(fill = "grey") +  
+  labs(x = "Year of Restoration Work",
+       y = "Number of Different Restoration Work Activities Reported") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
