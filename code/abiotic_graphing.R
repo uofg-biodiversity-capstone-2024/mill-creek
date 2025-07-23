@@ -406,7 +406,8 @@ ggplot(ranger_activities_summary, aes(x = factor(Year), y = n, fill = factor(Yea
 
 
 # Heat map timeline graph -------------------------------------------------
-#Water quality parameters heat map
+###Water quality parameters heat map
+#Making a df with all water quality params
 all_chems <- bind_rows(ammonium, chloride, nitrate, nitrite, phosphate, dissolved_oxygen, conductivity, ph) %>%     #Making a df with all water quality parameters
   clean_names() %>% 
   select(analyte, collection_date_2) %>%
@@ -421,14 +422,18 @@ all_chems <- bind_rows(ammonium, chloride, nitrate, nitrite, phosphate, dissolve
   mutate(analyte = recode(analyte, "CONDUCTIVITY, 25C" = "Conductivity")) %>%
   mutate(analyte = recode(analyte, "CHLORIDE,         UNFIL.REAC" = "Chloride")) #Cleaning up df
 
+#Making a df for graphing
 all_chems_summary <- all_chems %>%
   mutate(year = year(collection_date_2)) %>%  #Extracting year 
   group_by(year, analyte) %>%                 #Grouping by year and analyte
-  summarise(n = n(), .groups = "drop")        #Counting number of rows = observations in each group, then ungroup
+  summarise(n = n(), .groups = "drop") %>%    #Counting number of rows = observations in each group, then ungroup
+  mutate(n_factor = factor(n))                #Making list for palette
 
-palette <- hcl.colors(length(unique(df_summary$n_factor)), palette = "Set2") #define color palette
+#Palette 
+palette <- hcl.colors(length(unique(all_chems_summary$n_factor)), palette = "Set2") #define color palette
 
-ggplot(all_chems_summary, aes(x = factor(year), y = analyte, fill = factor(n))) +
+#Graph
+ggplot(all_chems_summary, aes(x = factor(year), y = analyte, fill = n_factor)) +
   geom_tile(color = "white") +
   scale_fill_manual(values = palette, name = "Count") +
   labs(
@@ -439,19 +444,50 @@ ggplot(all_chems_summary, aes(x = factor(year), y = analyte, fill = factor(n))) 
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
 
-# ggplot(df_summary, aes(x = factor(year), y = analyte, fill = n)) +
-#   geom_tile(color = "white") +
-#   scale_fill_viridis_c(option = "plasma", name = "Count") +  # or scale_fill_gradient()
-#   labs(x = "Year", y = "Analyte", title = "Number of Observations per Analyte per Year") +
-#   theme_minimal() +
-#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+###Other abiotics heat map
+air_temp_summarized <- air_temp_summarized %>% 
+  mutate(Name = "Air temperature")  #adding an id column to every df before binding rows
+ABF_water_temp_summarized <- ABF_water_temp_summarized %>% 
+  mutate(Name = "Aberfoyle water temperature")  
+SR10_water_temp_summarized <- SR10_water_temp_summarized %>% 
+  mutate(Name = "Side Road 10 water temperature")
+precip_summarized <- precip_summarized %>% 
+  mutate(Name = "Precipitation")
 
-# ggplot(df_summary, aes(x = factor(year), y = analyte, fill = n)) +
-#   geom_tile(color = "white") +
-#   scale_fill_gradient(low = "white", high = "steelblue", name = "Count") +
-#   labs(x = "Year", y = "Analyte", title = "Number of Observations per Analyte per Year") +
-#   theme_minimal() +
-#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+#Making a df with all abiotics
+all_abiotics <- bind_rows(air_temp_summarized, ABF_water_temp_summarized, SR10_water_temp_summarized, precip_summarized) %>% 
+  clean_names() %>% 
+  select(year, num_samples, name) 
 
+#Making a df for graphing
+all_abiotics_summary <- all_abiotics %>%
+  group_by(year, name) %>%                    #Grouping by year and analyte
+  summarise(num_samples = sum(num_samples, na.rm = TRUE), .groups = "drop") %>%  #Adding number of samples in each month to get total number in year
+  mutate(n_factor = factor(num_samples))      #Making list for palette
 
+all_abiotics_summary <- all_abiotics_summary %>% 
+  na.omit() #Air temp has NAs (?!)
 
+#This section used to work, now messes up graph and gives NAs - to investigate later
+# #Leveling the names (of params) for the graph later
+# custom_order <- c("Air temperature", "Precipitation", "Aberfoyle water temperature", "Side Road 10 water temperature") #custom order
+# all_abiotics_summary$name <- factor(all_abiotics_summary$name, 
+#                                     levels = rev(levels(all_abiotics_summary$name))) #reverse the levels so first custom name is at the top of the y-axis
+
+#Palette (skipping colours to avoid similairty in hue between low and high values)
+palette <- hcl.colors(15, palette = "Set2")[4:15]  # Skip first 3 (pinkish) colors
+
+#Graph
+ggplot(all_abiotics_summary, aes(x = factor(year), y = name, fill = num_samples)) +
+  geom_tile(color = "white") +
+  scale_fill_gradientn(colors = palette, name = "Number of Samples") +
+  labs(
+    x = "Year",
+    y = "Name",
+    title = "Number of Collection Times per Parameter per Year"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  )
