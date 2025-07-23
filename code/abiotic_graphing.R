@@ -363,7 +363,7 @@ ggplot(low_precip_years, aes(x = Month)) +
                                         linetype = 2))
 
 # Rangers restoration graphs ---------------------------------------------------
-palette <- hcl.colors(18, palette = "Set2") # define color palette
+palette <- hcl.colors(22, palette = "Set2") # define color palette
 
 # Restoration methods
 ggplot(years_reported_activities, aes(x = Restoration.Work.Performed, y = count, fill = Restoration.Work.Performed)) +
@@ -388,12 +388,70 @@ ggplot(years_reported_sites, aes(x = Location, y = count, fill = Location)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
 
 #Restoration timeline
-ranger_activities_summary <- ranger_activities %>%
-  count(Year)
+all_years <- data.frame(Year = min(ranger_activities$Year):max(ranger_activities$Year)) #Making a list of all years
 
-ggplot(ranger_activities_summary, aes(x = Year, y = n)) +
-  geom_col(fill = "grey") +  
-  labs(x = "Year of Restoration Work",
-       y = "Number of Different Restoration Work Activities Reported") +
+ranger_activities_summary <- ranger_activities %>%
+  count(Year) %>%
+  right_join(all_years, by = "Year") %>%
+  mutate(n = ifelse(is.na(n), 0, n)) #Making sure years with 0 observations are included in df as 0, not NA
+
+ggplot(ranger_activities_summary, aes(x = factor(Year), y = n, fill = factor(Year))) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = palette) +
+  labs(
+    x = "Year of Restoration Work",
+    y = "Number of Different Restoration Work Activities Reported") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1), legend.position = "none")
+
+
+# Heat map timeline graph -------------------------------------------------
+#Water quality parameters heat map
+all_chems <- bind_rows(ammonium, chloride, nitrate, nitrite, phosphate, dissolved_oxygen, conductivity, ph) %>%     #Making a df with all water quality parameters
+  clean_names() %>% 
+  select(analyte, collection_date_2) %>%
+  mutate(analyte = recode(analyte, "AMMONIUM, TOTAL   UNFIL.REAC" = "Ammonium")) %>% 
+  mutate(analyte = recode(analyte, "NITRITE,  UNFILTERED REACTIVE" = "Nitrite")) %>% 
+  mutate(analyte = recode(analyte, "PHOSPHATE,FILTERED REACTIVE" = "Phosphate")) %>% 
+  mutate(analyte = recode(analyte, "DISSOLVED OXYGEN" = "Dissolved oxygen")) %>% 
+  mutate(analyte = recode(analyte, "PH FIELD" = "pH")) %>% 
+  mutate(analyte = recode(analyte, "PH (-LOG H+ CONCN)" = "pH")) %>%    
+  filter(analyte != "NITRATES TOTAL,   UNFIL.REAC") %>% 
+  mutate(analyte = recode(analyte, "CONDUCTIVITY, AMBIENT" = "Conductivity")) %>%
+  mutate(analyte = recode(analyte, "CONDUCTIVITY, 25C" = "Conductivity")) %>%
+  mutate(analyte = recode(analyte, "CHLORIDE,         UNFIL.REAC" = "Chloride")) #Cleaning up df
+
+all_chems_summary <- all_chems %>%
+  mutate(year = year(collection_date_2)) %>%  #Extracting year 
+  group_by(year, analyte) %>%                 #Grouping by year and analyte
+  summarise(n = n(), .groups = "drop")        #Counting number of rows = observations in each group, then ungroup
+
+palette <- hcl.colors(length(unique(df_summary$n_factor)), palette = "Set2") #define color palette
+
+ggplot(all_chems_summary, aes(x = factor(year), y = analyte, fill = factor(n))) +
+  geom_tile(color = "white") +
+  scale_fill_manual(values = palette, name = "Count") +
+  labs(
+    x = "Year",
+    y = "Analyte",
+    title = "Number of Collection Times per Analyte per Year"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, hjust = 1))
+
+# ggplot(df_summary, aes(x = factor(year), y = analyte, fill = n)) +
+#   geom_tile(color = "white") +
+#   scale_fill_viridis_c(option = "plasma", name = "Count") +  # or scale_fill_gradient()
+#   labs(x = "Year", y = "Analyte", title = "Number of Observations per Analyte per Year") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+# ggplot(df_summary, aes(x = factor(year), y = analyte, fill = n)) +
+#   geom_tile(color = "white") +
+#   scale_fill_gradient(low = "white", high = "steelblue", name = "Count") +
+#   labs(x = "Year", y = "Analyte", title = "Number of Observations per Analyte per Year") +
+#   theme_minimal() +
+#   theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+
