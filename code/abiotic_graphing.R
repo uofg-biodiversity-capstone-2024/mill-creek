@@ -49,6 +49,7 @@ ranger_activities <- read.csv("data/Ranger_restoration_activities.csv", header=T
 
 ranger_sites <- read.csv("data/Ranger_work_sites.csv", header=TRUE) # restoration work sites
 
+ranger_full <- read_excel("data/Ranger_mill_creek_restoration_raw_data.xlsx") # restoration work year, activity, location
 
 # Data prep ---------------------------------------------------------------
 ### PWQMN data
@@ -491,3 +492,200 @@ ggplot(all_abiotics_summary, aes(x = factor(year), y = name, fill = num_samples)
     plot.title = element_text(hjust = 0.5),
     axis.text.x = element_text(angle = 90, hjust = 1)
   )
+
+##Heat map of Ranger activities (type, location)
+View(ranger_full)
+
+#do names of restoration work match what is in the ranger_activities?
+intersect(ranger_full$`restoration work done`, ranger_activities$Restoration.Work.Performed)
+#"Garbage removal"
+unique(ranger_activities$Restoration.Work.Performed)
+unique(ranger_full$`restoration work done`)
+
+#assigning categories from ranger_activities to tasks in restoration_full
+ranger_full <- ranger_full %>% 
+  clean_names()
+ranger_full_with_categories <- ranger_full %>% 
+  mutate(category = case_when(
+    restoration_work_done == "pruning, gardening, trail cleaning" ~ "Trail/Parking maintenance",
+    restoration_work_done == "Trail grooming and widening" ~ "Trail/Parking maintenance",
+    restoration_work_done == "Blinders added to pheasents" ~ "Other",
+    restoration_work_done == "Garbage removal" ~ "Garbage removal",
+    restoration_work_done == "trail construction" ~ "Trail/Parking maintenance",
+    restoration_work_done == "Fixed rehabilitation structure" ~ "Repairs to restoration structures",
+    restoration_work_done == "Brush bundles" ~ "Suitable fish habitat",
+    restoration_work_done == "Sweeper addition" ~ "Deflector/Sweeper construction or installation",
+    restoration_work_done == "Deflector and sweeper addition" ~ "Deflector/Sweeper construction or installation",
+    restoration_work_done == "added brush bundles and rocks" ~ "Suitable fish habitat",
+    restoration_work_done == "Dam Removal" ~ "Obstruction removal",
+    restoration_work_done == "Temperature recording" ~ "Abiotic data collection",
+    restoration_work_done == "Sediment Sampling" ~ "Abiotic data collection",
+    restoration_work_done == "Litter removal" ~ "Vegetation management",
+    restoration_work_done == "Deflector installaton" ~ "Deflector/Sweeper construction or installation",
+    restoration_work_done == "Seedling planting" ~ "Planting",
+    restoration_work_done == "Trimming trees" ~ "Vegetation management",
+    restoration_work_done == "Trail maintenance" ~ "Trail/Parking maintenance",
+    restoration_work_done == "Gate installation for parking" ~ "Trail/Parking maintenance",
+    restoration_work_done == "Weed removal" ~ "Invasive species management",
+    restoration_work_done == "fence repair/maintenance" ~ "Trail/Parking maintenance",
+    restoration_work_done == "removed log jams, brush bundles/deflectors" ~ "Obstruction removal",
+    restoration_work_done == "Cut large swath" ~ "Vegetation management",
+    restoration_work_done == "garbage removal" ~ "Garbage removal",
+   restoration_work_done == "garbage and log jam removal" ~ "Garbage removal",
+   restoration_work_done == "Benthic Invertebrate collection" ~ "Biotic data collection",
+   restoration_work_done == "electrofishing" ~ "Biotic data collection",
+   restoration_work_done == "trail repair" ~ "Trail/Parking maintenance",
+   restoration_work_done == "repairing old rehabilitation structures" ~ "Repairs to restoration structures",
+   restoration_work_done == "removing overhang and debris" ~ "Obstruction removal",
+   restoration_work_done == "parking area created" ~ "Trail/Parking maintenance",
+   restoration_work_done == "beaver dam removal" ~ "Suitable fish habitat",
+   restoration_work_done == "brush bundles" ~ "Suitable fish habitat",
+   restoration_work_done == "creation of by-pass channel" ~ "Suitable fish habitat",
+   restoration_work_done == "removed overhang/vegetation" ~ "Obstruction removal",
+   restoration_work_done == "removing trees abd debris" ~ "Obstruction removal",
+   restoration_work_done == "seedling planting" ~ "Planting",
+   restoration_work_done == "more defined parking areas" ~ "Trail/Parking maintenance",
+   restoration_work_done == "shrub removal" ~ "Vegetation management",
+   restoration_work_done == "removed fallen trees" ~ "Vegetation management",
+   restoration_work_done == "clear parking area" ~ "Trail/Parking maintenance",
+   restoration_work_done == "in stream barrier removal" ~ "Suitable fish habitat",
+   restoration_work_done == "seed planting" ~ "Planting",
+   restoration_work_done == "electrofihing" ~ "Biotic data collection",
+   restoration_work_done == "debirs clearing, flow redirection" ~ "Suitable fish habitat",
+   restoration_work_done == "clearing weeds in parking lot" ~ "Vegetation management",
+   restoration_work_done == "parking area maintenance" ~ "Trail/Parking maintenance",
+   restoration_work_done == "bridge removal" ~ "Other",
+   restoration_work_done == "removed logs and debris" ~ "Obstruction removal",
+   restoration_work_done == "garbage cleanup" ~ "Garbage removal",
+   restoration_work_done == "remove debris and overhang" ~ "Obstruction removal",
+   restoration_work_done == "debris removal, prepared new section" ~ "Obstruction removal",
+   restoration_work_done == "silt curtain installation" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "mark recapture fish mnitoring" ~ "Biotic data collection",
+   restoration_work_done == "debirs removal and log jam removal" ~ "Vegetation management",
+   restoration_work_done == "blockage remival" ~ "Obstruction removal",
+   restoration_work_done == "tree planting" ~ "Planting",
+   restoration_work_done == "removing trees, new trail created" ~ "Trail/Parking maintenance",
+   restoration_work_done == "Brush bundles/deflectors" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "removal of debris" ~ "Obstruction removal",
+   restoration_work_done == "improve ground water drain" ~ "Other",
+   restoration_work_done == "create deflectors" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "made more defined channel segment" ~ "Suitable fish habitat",
+   restoration_work_done == "log jam and overhead removal" ~ "Obstruction removal",
+   restoration_work_done == "debris removal" ~ "Obstruction removal",
+   restoration_work_done == "stream rehabilitation" ~ "Suitable fish habitat",
+   restoration_work_done == "removing debris add deflectors" ~ "Obstruction removal",
+   restoration_work_done == "remove overhang" ~ "Obstruction removal",
+   restoration_work_done == "removing debris add deflectors" ~ "Obstruction removal",
+   restoration_work_done == "fill in eroded banks" ~ "Suitable fish habitat",
+   restoration_work_done == "removal of debris" ~ "Obstruction removal",
+   restoration_work_done == "narrow channel" ~ "Suitable fish habitat",
+   restoration_work_done == "create brook trout spawning habitat" ~ "Suitable fish habitat",
+   restoration_work_done == "garbage and weed removal" ~ "Garbage removal",
+   restoration_work_done == "cover structures for fish" ~ "Suitable fish habitat",
+   restoration_work_done == "water quality analysis" ~ "Other",
+   restoration_work_done == "removal of debris" ~ "Obstruction removal",
+   restoration_work_done == "debris removal and narrow channel" ~ "Obstruction removal",
+   restoration_work_done == "remove log jams" ~ "Obstruction removal",
+   restoration_work_done == "modifying exisiting deflector" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "new deflector" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "moved rocks to shift the thalweg" ~ "Suitable fish habitat",
+   restoration_work_done == "removed debris, cleared obstructions" ~ "Obstruction removal",
+   restoration_work_done == "goose relocation" ~ "Other",
+   restoration_work_done == "carp rescue" ~ "Other",
+   restoration_work_done == "trail mulching" ~ "Trail/Parking maintenance",
+   restoration_work_done == "removed log jams, made brush bundles" ~ "Obstruction removal",
+   restoration_work_done == "improve location of woody debirs" ~ "Obstruction removal",
+   restoration_work_done == "removed old T bars" ~ "Obstruction removal",
+   restoration_work_done == "Sweeper/deflector addition" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "modified deflectors" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "log jam removal" ~ "Obstruction removal",
+   restoration_work_done == "sweeper adjustment" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "moving woody debris" ~ "Obstruction removal",
+   restoration_work_done == "removal of debris jams" ~ "Obstruction removal",
+   restoration_work_done == "debris and brush removal" ~ "Obstruction removal",
+   restoration_work_done == "tree removal" ~ "Obstruction removal",
+   restoration_work_done == "invasice buckthorn removal" ~ "Invasive species management",
+   restoration_work_done == "tree roval blocking flow" ~ "Obstruction removal",
+   restoration_work_done == "temperature monitoring" ~ "Abiotic data collection",
+   restoration_work_done == "removed blockages" ~ "Obstruction removal",
+   restoration_work_done == "sweepers/deflectors" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "remove overhang, move blocakges" ~ "Obstruction removal",
+   restoration_work_done == "clearing surrounding fences" ~ "Other",
+   restoration_work_done == "trail cleanup" ~ "Trail/Parking maintenance",
+   restoration_work_done == "removed debris jams" ~ "Obstruction removal",
+   restoration_work_done == "deflector" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "trail maintance" ~ "Trail/Parking maintenance",
+   restoration_work_done == "moved rocks" ~ "Suitable fish habitat",
+   restoration_work_done == "clear blockages and overgrown vegetation" ~ "Obstruction removal",
+   restoration_work_done == "remove woody debris" ~ "Obstruction removal",
+   restoration_work_done == "deflectors" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "fish structure construction" ~ "Suitable fish habitat",
+   restoration_work_done == "inaturalist observations" ~ "Biotic data collection",
+   restoration_work_done == "deflector" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "log jams" ~ "Obstruction removal",
+   restoration_work_done == "Invasive species control" ~ "Invasive species management",
+   restoration_work_done == "structure update" ~ "Repairs to restoration structures",
+   restoration_work_done == "STREAM sampling" ~ "Abiotic data collection",
+   restoration_work_done == "woody debris removal" ~ "Obstruction removal",
+   restoration_work_done == "trail maintance" ~ "Trail/Parking maintenance",
+   restoration_work_done == "Crossing maintenance" ~ "Trail/Parking maintenance",
+   restoration_work_done == "weed removal" ~ "Vegetation management",
+   restoration_work_done == "deflector installation" ~ "Deflector/Sweeper construction or installation",
+   restoration_work_done == "water level measurements" ~ "Abiotic data collection"
+  ))
+#Some entries have two separate actvities, SU split them up in the excel file that's on Git (ET has og file in One Drive)
+#The rows changed were:
+# deflector and trail repair (2004) --> deflector, trail repair
+# Crossing maintenance and weed removal (2004) --> crossing, weed removal
+# deflector installation, water level measurements (2006) --> deflector, water level measurements
+
+ranger_full_with_categories %>% 
+  filter(if_any(everything(), is.na)) %>% 
+  distinct() %>% 
+  View()
+ranger_full_with_categories %>% 
+  distinct(location) %>% 
+  View()
+
+ranger_full_with_categories <- ranger_full_with_categories %>% 
+  mutate(location = if_else(location == "mcKinnon Property", "McKinnon Property", location)) %>% 
+  mutate(location = if_else(location == "bond Tract", "Bond Tract", location)) %>% 
+  mutate(location = if_else(location == "Bond tract", "Bond Tract", location)) %>% 
+  mutate(location = if_else(location == "bond tract", "Bond Tract", location)) %>% 
+  mutate(location = if_else(location == "S. Paddocks Property", "Paddock Property", location)) %>% 
+  mutate(location = if_else(location == "soper park", "Soper Park", location)) %>% 
+  mutate(location = if_else(location == "capital paving pond", "Capital Paving Pond", location)) %>% 
+  mutate(location = if_else(location == "sopher park", "Soper Park", location))
+
+View(ranger_full_with_categories)
+
+ranger_final <- ranger_full_with_categories %>% 
+  select(year, location, category) %>%    #select columns
+  mutate(presence = 1) %>%
+  distinct(year, location, category, presence) %>%
+  complete(year, location, category, fill = list(presence = 0))
+
+observed_ranger_activities <- ranger_full_with_categories %>%
+  select(year, location, category) %>%
+  distinct() %>%
+  mutate(presence = 1)
+
+full_grid <- expand_grid(
+  year = unique(ranger_full_with_categories$year),
+  location = unique(ranger_full_with_categories$location),
+  category = unique(ranger_full_with_categories$category))
+
+ranger_final <- full_grid %>%
+  left_join(observed_ranger_activities, by = c("year", "location", "category")) %>%
+  mutate(presence = if_else(is.na(presence), 0, presence))
+
+View(ranger_final)
+
+ggplot(ranger_final, aes(x = factor(year), y = location, fill = factor(presence))) +
+  geom_tile(color = "white") +
+  scale_fill_manual(values = c("0" = "white", "1" = "steelblue"), 
+                    name = "Presence",
+                    labels = c("Absent", "Present")) +
+  labs(x = "Year", y = "Location", title = "Presence/Absence Heatmap by Category") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
