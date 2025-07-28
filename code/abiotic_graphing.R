@@ -655,15 +655,30 @@ ranger_full_with_categories <- ranger_full_with_categories %>%
   mutate(location = if_else(location == "S. Paddocks Property", "Paddock Property", location)) %>% 
   mutate(location = if_else(location == "soper park", "Soper Park", location)) %>% 
   mutate(location = if_else(location == "capital paving pond", "Capital Paving Pond", location)) %>% 
-  mutate(location = if_else(location == "sopher park", "Soper Park", location))
+  mutate(location = if_else(location == "sopher park", "Soper Park", location)) %>% 
+  mutate(location = if_else(location == "various locations", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "various locations", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "university of guelph property", "University of Guelph Property", location)) %>% 
+  mutate(location = if_else(location == "mill creek", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "across mill creek", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "throughout mill creek", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "Mill Creek", "Various locations", location)) %>% 
+  mutate(location = if_else(location == "pond tributary", "Pond tributary", location)) %>% 
+  mutate(location = if_else(location == "mccrimmon creek", "McCrimmon creek", location)) %>% 
+  mutate(location = if_else(location == "marden creek", "Marden creek", location)) %>% 
+  mutate(location = if_else(location == "kerr street bridge", "Kerr Street bridge", location)) %>% 
+  mutate(location = if_else(location == "heritage lake", "Heritage Lake", location)) %>% 
+  mutate(location = if_else(location == "foti property", "Foti property", location)) 
+  
+  
 
 View(ranger_full_with_categories)
 
-ranger_final <- ranger_full_with_categories %>% 
-  select(year, location, category) %>%    #select columns
-  mutate(presence = 1) %>%
-  distinct(year, location, category, presence) %>%
-  complete(year, location, category, fill = list(presence = 0))
+# ranger_final <- ranger_full_with_categories %>% 
+#   select(year, location, category) %>%    #select columns
+#   mutate(presence = 1) %>%
+#   distinct(year, location, category, presence) %>%
+#   complete(year, location, category, fill = list(presence = 0))
 
 observed_ranger_activities <- ranger_full_with_categories %>%
   select(year, location, category) %>%
@@ -682,10 +697,86 @@ ranger_final <- full_grid %>%
 View(ranger_final)
 
 ggplot(ranger_final, aes(x = factor(year), y = location, fill = factor(presence))) +
-  geom_tile(color = "white") +
-  scale_fill_manual(values = c("0" = "white", "1" = "steelblue"), 
-                    name = "Presence",
-                    labels = c("Absent", "Present")) +
-  labs(x = "Year", y = "Location", title = "Presence/Absence Heatmap by Category") +
+  geom_tile(color = "black", linewidth = 0.3) +  # black borders between tiles
+  scale_fill_manual(
+    values = c("0" = "white", "1" = "steelblue"),
+    name = "Presence",
+    labels = c("Absent", "Present")
+  ) +
+  labs(
+    x = "Year",
+    y = "Location",
+    title = "Presence/Absence Heatmap by Category"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid = element_blank()  # remove background grid
+  )
+ggplot(ranger_final %>% filter(presence == 1), 
+       aes(x = factor(year), y = location, fill = category)) +
+  geom_tile(color = "black") +
+  labs(x = "Year", y = "Location", title = "Heatmap of Categories Present") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggplot(ranger_final, aes(x = factor(year), y = location, fill = ifelse(presence == 1, category, NA))) +
+  geom_tile(color = "black") +
+  scale_fill_manual(
+    values = RColorBrewer::brewer.pal(length(unique(ranger_final$category)), "Set3"),
+    na.value = "white"
+  ) +
+  labs(x = "Year", y = "Location", title = "Presence Heatmap Colored by Category") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ranger_final_summary <- ranger_final %>%
+  filter(presence == 1) %>%
+  count(year, location)  # count how many categories per cell
+
+ggplot(ranger_final_summary, aes(x = factor(year), y = location, fill = n)) +
+  geom_tile(color = "black") +
+  scale_fill_gradient(low = "white", high = "darkred", name = "# Categories") +
+  labs(x = "Year", y = "Location", title = "Number of Categories Present per Year × Location") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+# Assign a position within each cell for each category
+library(dplyr)
+library(ggplot2)
+
+# Create numeric x/y for plotting
+ranger_split <- ranger_final %>%
+  filter(presence == 1) %>%
+  mutate(
+    year_f = factor(year),
+    location_f = factor(location),
+    x = as.numeric(year_f),
+    y = as.numeric(location_f)
+  ) %>%
+  group_by(year, location) %>%
+  mutate(
+    cat_id = row_number(),  # used for offsetting the tiles
+    total = n()
+  ) %>%
+  ungroup()
+
+# Plot: small offset tiles within each year × location block
+ggplot(ranger_split, aes()) +
+  geom_tile(
+    aes(
+      x = x + (cat_id - 1) / 10,  # horizontal offset per category
+      y = y,
+      fill = category
+    ),
+    width = 0.09, height = 0.9, color = "black"
+  ) +
+  scale_x_continuous(
+    breaks = sort(unique(ranger_split$x)),
+    labels = levels(ranger_split$year_f)
+  ) +
+  scale_y_continuous(
+    breaks = sort(unique(ranger_split$y)),
+    labels = levels(ranger_split$location_f)
+  ) +
+  labs(x = "Year", y = "Location", title = "Multi-Category Heatmap with Split Tiles") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
